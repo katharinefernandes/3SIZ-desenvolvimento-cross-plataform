@@ -1,0 +1,12 @@
+Explique como funciona a lógica de classificação usando if/else dentro de
+um programa Dart
+
+Para o programa desenvolvido optei por utilizar o padrão de ternário.
+Sendo que, o interrogração(?) significa a condição positiva para o if e o : o que deve acontecer no else.
+
+Então
+se a temperatura for menor do que 15 a app irá aprensentar "Frio".
+se não, se a temperatura for maior que 25 a app irá aprensentar "Quente"
+se não, ou seja, entre 15 e 15, a app irá aprensentar "Agradável"
+
+temperatura < 15 ? "Frio" : temperatura > 25 ? "Quente" : "Agradável";
