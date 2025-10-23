@@ -3,9 +3,7 @@ import 'package:myapp/home_view_model.dart';
 import 'package:provider/provider.dart';
 
 class HomeScreen extends StatefulWidget {
-  final String title;
-
-  const HomeScreen({super.key, required this.title});
+  const HomeScreen({super.key});
 
   @override
   State<HomeScreen> createState() => _HomeScreenState();
@@ -31,33 +29,98 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 
   @override
+  void dispose() {
+    _nameController.dispose();
+    _ageController.dispose();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(title: Text(widget.title)),
-      body: Column(
-        children: [
-          Row(
-            children: [
-              Expanded(
-                child: TextField(
-                  controller: _nameController,
-                  decoration: InputDecoration(labelText: "Informe o nome"),
-                ),
+    _homeViewModel = context.watch<HomeViewModel>();
+
+    return SafeArea(
+      child: Scaffold(
+        appBar: AppBar(title: const Text("Gerenciamento de estado")),
+        body: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Expanded(
+              flex: 3,
+              child: Column(
+                children: [
+                  const Text("Pré-Cadastro", style: TextStyle(fontSize: 20)),
+                  const SizedBox(height: 20),
+                  Form(
+                    key: _formKey,
+                    child: Column(
+                      children: [
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            const SizedBox(width: 10),
+                            Expanded(
+                              child: TextFormField(
+                                controller: _nameController,
+                                decoration: InputDecoration(
+                                  labelText: "Informe o nome",
+                                  border: OutlineInputBorder(
+                                    borderRadius: BorderRadius.circular(1),
+                                  ),
+                                ),
+                              ),
+                            ),
+                            const SizedBox(width: 10),
+                            Expanded(
+                              child: TextFormField(
+                                controller: _ageController,
+                                keyboardType: TextInputType.number,
+                                decoration: InputDecoration(
+                                  labelText: "Informe a idade",
+                                  border: OutlineInputBorder(
+                                    borderRadius: BorderRadius.circular(1),
+                                  ),
+                                ),
+                              ),
+                            ),
+                            const SizedBox(width: 10),
+                          ],
+                        ),
+                        ElevatedButton(
+                          onPressed: () {
+                            _homeViewModel.add(
+                              _nameController.text,
+                              _ageController.text,
+                            );
+                          },
+                          child: Text("Salvar"),
+                        ),
+                      ],
+                    ),
+                  ),
+                ],
               ),
-              Expanded(
-                child: TextField(
-                  controller: _ageController,
-                  decoration: InputDecoration(labelText: "Informe a idade"),
-                ),
+            ),
+            Expanded(
+              flex: 7,
+              child: ListView.builder(
+                itemCount: _homeViewModel.listExplorers.length,
+                itemBuilder: (context, index) {
+                  return ListTile(
+                    title: Text("${_homeViewModel.listExplorers[index].name}"),
+                    subtitle: Text(
+                      "${_homeViewModel.listExplorers[index].age}",
+                    ),
+                    trailing: IconButton(
+                      onPressed: (){},
+                      icon: Icon(Icons.delete),
+                    ),
+                  );
+                },
               ),
-            ],
-          ),
-          ElevatedButton(onPressed: () {
-            final name = _nameController.text;
-            final age = _ageController.text;
-            _homeViewModel.add(name, age);
-          }, child: Text("salvar"))
-        ],
+            ),
+          ],
+        ),
       ),
     );
   }
