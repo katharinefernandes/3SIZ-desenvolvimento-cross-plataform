@@ -1,0 +1,13 @@
+Questão dissertativa
+Pergunta: 
+Suponha que um aplicativo exibe uma lista de produtos e o usuário pode
+marcar itens como favoritos. Explique como o Provider pode ser usado para
+atualizar a interface automaticamente quando um produto é favoritado.
+
+Resposta:
+O Provider irá conseguir reagir a mudanças de estado. 
+Por tanto, todas as vezes que o usuário favoritar um produto ele é adicionado a lista e quando o produto é desfavoritado ele é removido da lista.
+Ou seja, a lista é atualizada automaticamente de acordo com essas ações, sem precisar recarregar manualmente a lista na tela.
+
+Além disso, com a utilização do watch ele observa essas mudanças da lista do provider e apenas altera 
+aquela parte da tela que sofreu alteração sem a necessidade de construir TODA a tela novamente.
