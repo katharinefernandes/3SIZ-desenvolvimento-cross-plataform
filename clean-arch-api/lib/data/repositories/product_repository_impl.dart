@@ -6,12 +6,10 @@ class ProductRepositoryImpl extends ProductRepository {
 
   final ProductDatasource productDatasource;
 
-  ProductRepositoryImpl(this.productDatasource)
+  ProductRepositoryImpl(this.productDatasource);
 
   @override
   Future<List<ProductEntity>> getProducts() {
     return productDatasource.getProducts();
   }
-
-
 }
