@@ -3,7 +3,6 @@ import 'package:myapp/core/custom_http_client.dart';
 import 'package:myapp/data/datasources/product_datasource.dart';
 import 'package:myapp/data/repositories/product_repository_impl.dart';
 import 'package:myapp/data/usecases/get_product_use_case.dart';
-import 'package:myapp/domain/repositories/product_repository.dart';
 import 'package:myapp/presentation/controllers/product_controller.dart';
 import 'package:myapp/presentation/pages/product_page.dart';
 import 'package:provider/provider.dart';

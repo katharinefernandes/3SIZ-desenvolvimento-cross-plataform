@@ -11,8 +11,21 @@ class ProductDatasource {
     final response = await customHttpClient.getProducts();
 
     // sabemos que uma lista está sendo retornada, então colocamos "as List"
-    return (response.data as List)
+    final List<dynamic> dataList = response.data is List ? response.data : [];
+    return (dataList)
         .map((prod) => ProductModel.fromJson(prod))
+        .map((model) => model.toProductEntity())
         .toList();
+  }
+
+  // método para cadastro de um produto
+  Future<bool> createProduct(ProductEntity product) async {
+    try {
+      final model = ProductModel.fromProductEntity(product);
+      await customHttpClient.createProduct(model.toJson());
+      return true;
+    } catch (e) {
+      return false;
+    }
   }
 }
