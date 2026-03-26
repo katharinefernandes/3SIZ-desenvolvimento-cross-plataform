@@ -1,0 +1,18 @@
+Descreva o fluxo completo de consumo de uma API utilizando o método
+GET em um aplicativo Flutter, desde a requisição até a exibição dos dados
+na interface.
+
+Resposta:
+
+Controller -> UseCase -> Repository -> DataSource -> CustomHttpClient -> API
+
+Para consultar uma API precisamos ter algumas camadas respeitando o cleanArch. Assim conseguimos designar melhor as responsabilidades e ter um centralização de código melhor, definindo estruturas e contratos a se seguir.
+
+Para isso, no flutter utilizamos:
+
+A API está mapeada para realizar uma operação. Nós abstraimos essa operação no httpClient.
+1. httpClient sabe realizar a operação na API, passando os parâmetros necessários para ela
+2. DataSource, no caso de uma consulta o httpClient retorna algo, é mapeado corretamente pelo DataSource que conhece o dominio da app, ou seja, suas entidades. Assim ele consegue chamar a entidade para conseguir converter de um json, para algo que a aplicação irá entender: uma entidade.
+3. Repository, responsável por saber quais operações a app quer realizar e chamar o que é necessário para realizar a operação. Por tanto, aqui ele deve ter um contrato e implementar esse contrato chamando o DataSource, que sabe como realizar a operação
+4. UseCase, responsável pela camada de negócio. Validações relacionadas a negócio são realizadas nessa camada. Aqui ele chama o contrato do repository que conhece as operações que o sistema pode realizar.
+5. Controller, por fim nós deixamos a responsabilidade para um controlador, que conhece a camada de negócio responsável por realizar determinadas operações. Ele é responsável por chamar useCase e propagar para tela o que houve de alterações.
